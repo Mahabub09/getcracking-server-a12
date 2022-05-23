@@ -42,12 +42,21 @@ async function run() {
             res.send(reviews);
         });
 
-        //POST
+        //---POST-------
+
+        //tool
         app.post('/tool', async (req, res) => {
             const newTool = req.body;
             const result = await toolsCollection.insertOne(newTool);
             res.send(result);
         });
+        //review
+        app.post('/review', async (req, res) => {
+            const newReview = req.body;
+            const result = await reviewCollection.insertOne(newReview);
+            res.send(result);
+        });
+
 
     }
     finally {
