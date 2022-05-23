@@ -18,6 +18,8 @@ async function run() {
         await client.connect();
         const toolsCollection = client.db('sinewy_tools').collection('tools');
         const reviewCollection = client.db('sinewy_tools').collection('reviews')
+        //------------GET--------------//
+
 
         // TOOL
         app.get('/tool', async (req, res) => {
@@ -42,7 +44,7 @@ async function run() {
             res.send(reviews);
         });
 
-        //---POST-------
+        //----------POST-------//
 
         //tool
         app.post('/tool', async (req, res) => {
