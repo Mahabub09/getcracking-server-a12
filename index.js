@@ -17,7 +17,9 @@ async function run() {
     try {
         await client.connect();
         const toolsCollection = client.db('sinewy_tools').collection('tools');
+        const reviewCollection = client.db('sinewy_tools').collection('reviews')
 
+        // TOOL
         app.get('/tool', async (req, res) => {
             const query = {};
             const cursor = toolsCollection.find(query);
@@ -30,6 +32,14 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const tool = await toolsCollection.findOne(query);
             res.send(tool);
+        });
+
+        //REVIEW
+        app.get('/review', async (req, res) => {
+            const query = {};
+            const cursor = reviewCollection.find(query);
+            const reviews = await cursor.toArray();
+            res.send(reviews);
         });
 
         //POST
