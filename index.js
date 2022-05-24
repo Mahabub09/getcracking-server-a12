@@ -18,6 +18,7 @@ async function run() {
         await client.connect();
         const toolsCollection = client.db('sinewy_tools').collection('tools');
         const reviewCollection = client.db('sinewy_tools').collection('reviews')
+        const orderCollection = client.db('sinewy_tools').collection('orders');
         //------------GET--------------//
 
 
@@ -58,6 +59,7 @@ async function run() {
             const result = await reviewCollection.insertOne(newReview);
             res.send(result);
         });
+
 
 
     }
