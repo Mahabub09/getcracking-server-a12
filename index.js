@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 const port = process.env.PORT || 5000;
@@ -19,6 +20,7 @@ async function run() {
         const toolsCollection = client.db('sinewy_tools').collection('tools');
         const reviewCollection = client.db('sinewy_tools').collection('reviews')
         const orderCollection = client.db('sinewy_tools').collection('orders');
+        const userCollection = client.db('sinewy_tools').collection('users');
         //------------GET--------------//
 
 
@@ -73,6 +75,19 @@ async function run() {
             const order = req.body;
             const result = await orderCollection.insertOne(order);
             res.send(result);
+        })
+
+        app.put('/user/:email', async (req, res) => {
+            const email = req.params.email;
+            const user = req.body;
+            const filter = { email: email };
+            const options = { upsert: true };
+            const updateDoc = {
+                $set: user,
+            };
+            const result = await userCollection.updateOne(filter, updateDoc, options);
+            const token = jwt.sign({ email: email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1h' })
+            res.send({ result, token });
         })
 
 
